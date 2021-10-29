@@ -23,34 +23,16 @@ export default function Main() {
 	}, [dispatch]);
 
 	const [currentPage, setCurrentPage] = useState<any>(null);
-	// const [currentArticle, setCurrentArticle] = useState(null);
+	const [tempPage, setTempPage] = useState(null);
 
 	if (currentPage !== null && currentPage !== 'read') {
 		return (<View style={styles.container} >
 			<ScrollView _contentContainerStyle={{
-				px: "20px",
+				px: "0px",
 				mb: "4",
 				minW: "72",
-			}} style={{ flex: 1, paddingTop: '0px' }}>
-
-				<Center  bg="primary.300" >
-					<Menu
-						// closeOnSelect={false}
-						w="190"
-						onOpen={() => console.log("opened")}
-						onClose={() => console.log("closed")}
-						trigger={(triggerProps) => {
-							return (
-								<Pressable {...triggerProps}>
-									<HamburgerIcon />
-								</Pressable>
-							)
-						}}
-					>
-						{categories?.map(c => <Menu.Item bg="primary.500" key={c._id} onPress={() => { setCurrentPage(c.title); console.log(c.title) }}>{c.title}</Menu.Item>)}
-					</Menu>
-					
-				</Center>
+			}} style={{ flex: 1 }}>
+				<Center bg="primary.900"><Button px={100} bg="primary.900" onPress={() => { setCurrentPage(null) }}>{'Go to Back'}</Button></Center>
 				<Center  ><Heading fontSize="xl" color="black">{currentPage}</Heading></Center>
 				<VStack flex="1" space={2}>
 					{posts?.map(p => p.category === currentPage &&
@@ -63,32 +45,19 @@ export default function Main() {
 		);
 	} else if (currentPage === 'read') {
 		return (<View style={styles.container} >
+			<View style={styles.exampleStyle}>
+				<Center position="sticky" bg="primary.900" ><Button px={100} bg="primary.900" onPress={() => { setCurrentPage(tempPage) }}>{'Go to Back'}</Button></Center>
+			</View>
 			<ScrollView _contentContainerStyle={{
 				px: "10px",
 				mb: "0",
 				minW: "72",
 			}} style={{ flex: 1 }}>
 
-				<Center bg="primary.300" >
-
-					<Menu
-						// closeOnSelect={false}
-						w="190"
-						onOpen={() => console.log("opened")}
-						onClose={() => console.log("closed")}
-						trigger={(triggerProps) => {
-							return (
-								<Pressable {...triggerProps}>
-									<HamburgerIcon />
-								</Pressable>
-							)
-						}}
-					>
-						{categories.map(c => <Menu.Item bg="primary.500" key={c._id} onPress={() => { setCurrentPage(c.title); console.log(c.title) }}>{c.title}</Menu.Item>)}
-					</Menu>
-
-				</Center>
 				<Markdown styles={styles}>{post.text}</Markdown>
+
+
+
 			</ScrollView></View>
 		);
 	} else
@@ -103,7 +72,8 @@ export default function Main() {
 						minW: "72",
 					}}
 					style={{ flex: 1 }}>
-					<VStack space={1}>{categories.map(c => <Button size="sm" key={c._id} onPress={() => { setCurrentPage(c.title); console.log(c.title) }}>{c.title}</Button>)}
+					<VStack space={1}>{categories.map(c =>
+						<Button size="sm" key={c._id} onPress={() => { setCurrentPage(c.title); setTempPage(c.title) }}>{c.title}</Button>)}
 					</VStack>
 				</ScrollView>
 			</View>
@@ -129,4 +99,8 @@ const styles = StyleSheet.create({
 	paragraph: {
 		fontSize: 14,
 	},
+	exampleStyle: {
+		position: 'absolute',
+		top: 0
+	}
 });
