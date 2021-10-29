@@ -3,10 +3,11 @@ import { Pressable, StyleSheet, Text, View, } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategoriesTC } from '../redux/categoriesReducer';
 import { getShortPostsTC, PostType } from '../redux/postsReducer';
-import { NativeBaseProvider, Box, extendTheme, Menu, HamburgerIcon, ScrollView, Center, Heading, VStack, Button } from 'native-base';
+import { ScrollView, Center, Heading, VStack, Button } from 'native-base';
 import { getPostTC } from '../redux/filterReducer';
 import { AppStateType } from '../redux/store';
-import Markdown from 'react-native-markdown-text'
+import Markdown from 'react-native-markdown-renderer';
+import { MarkdownView } from 'react-native-markdown-view'
 
 export default function Main() {
 	const categories = useSelector<any, Array<any>>(state => state.categories);
@@ -52,12 +53,10 @@ export default function Main() {
 				px: "10px",
 				mb: "0",
 				minW: "72",
+				maxW: "370",
 			}} style={{ flex: 1 }}>
 
-				<Markdown styles={styles}>{post.text}</Markdown>
-
-
-
+				<MarkdownView >{post.text}</MarkdownView>
 			</ScrollView></View>
 		);
 	} else
@@ -101,6 +100,7 @@ const styles = StyleSheet.create({
 	},
 	exampleStyle: {
 		position: 'absolute',
-		top: 0
+		top: 0,
+		zIndex: 99
 	}
 });
