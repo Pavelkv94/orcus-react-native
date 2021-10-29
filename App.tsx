@@ -37,8 +37,8 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<SafeAreaView style={styles.container}>
-			<NativeBaseProvider theme={theme}>
-				<Main />
+				<NativeBaseProvider theme={theme}>
+					<Main />
 				</NativeBaseProvider>
 			</SafeAreaView>
 		</Provider>

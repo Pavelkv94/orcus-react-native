@@ -26,96 +26,86 @@ export default function Main() {
 	// const [currentArticle, setCurrentArticle] = useState(null);
 
 	if (currentPage !== null && currentPage !== 'read') {
-		return (
+		return (<View style={styles.container} >
 			<ScrollView _contentContainerStyle={{
 				px: "20px",
 				mb: "4",
 				minW: "72",
-			}} >
+			}} style={{ flex: 1, paddingTop: '0px' }}>
 
-				<Center mt="3" mb="4">
-					<Box h="90%" w='300'>
-						<Menu
-							// closeOnSelect={false}
-							w="190"
-							onOpen={() => console.log("opened")}
-							onClose={() => console.log("closed")}
-							trigger={(triggerProps) => {
-								return (
-									<Pressable {...triggerProps}>
-										<HamburgerIcon bg="primary.500" />
-									</Pressable>
-								)
-							}}
-						>
-							{categories.map(c => <Menu.Item bg="primary.500" key={c._id} onPress={() => { setCurrentPage(c.title); console.log(c.title) }}>{c.title}</Menu.Item>)}
-						</Menu>
-					</Box>
-					<Heading fontSize="xl" color="black">{currentPage}</Heading>
-				</Center>
-				<VStack flex="1" space={2}>
-					{posts.map(p => p.category === currentPage &&
-						<Button size="sm" key={p._id} onPress={() => { setCurrentPage('read'); dispatch(getPostTC(p._id)) }}>
-							<Text>{p.title}</Text>
-						</Button>
-					)}
-				</VStack>
-			</ScrollView>
-		);
-	} else if (currentPage === 'read') {
-		return (
-			<ScrollView _contentContainerStyle={{
-				px: "20px",
-				mb: "4",
-				minW: "72",
-			}} >
-
-				<Center mt="3" mb="4">
-					<Box h="90%" w='300'>
-						<Menu
-							// closeOnSelect={false}
-							w="190"
-							onOpen={() => console.log("opened")}
-							onClose={() => console.log("closed")}
-							trigger={(triggerProps) => {
-								return (
-									<Pressable {...triggerProps}>
-										<HamburgerIcon bg="primary.500" />
-									</Pressable>
-								)
-							}}
-						>
-							{categories.map(c => <Menu.Item bg="primary.500" key={c._id} onPress={() => { setCurrentPage(c.title); console.log(c.title) }}>{c.title}</Menu.Item>)}
-						</Menu>
-					</Box>
-				</Center>
-				<Markdown styles={styles}>{post.text}</Markdown>
-			</ScrollView>
-		);
-	} else
-
-		return (
-
-			<View style={styles.container}>
-				<Box h="90%" w='300'>
+				<Center  bg="primary.300" >
 					<Menu
 						// closeOnSelect={false}
 						w="190"
 						onOpen={() => console.log("opened")}
 						onClose={() => console.log("closed")}
 						trigger={(triggerProps) => {
-							return (<View>
+							return (
 								<Pressable {...triggerProps}>
-									<HamburgerIcon bg="primary.500" />
-
+									<HamburgerIcon />
 								</Pressable>
-								</View>
+							)
+						}}
+					>
+						{categories?.map(c => <Menu.Item bg="primary.500" key={c._id} onPress={() => { setCurrentPage(c.title); console.log(c.title) }}>{c.title}</Menu.Item>)}
+					</Menu>
+					
+				</Center>
+				<Center  ><Heading fontSize="xl" color="black">{currentPage}</Heading></Center>
+				<VStack flex="1" space={2}>
+					{posts?.map(p => p.category === currentPage &&
+						<Button size="sm" key={p._id} onPress={() => { setCurrentPage('read'); dispatch(getPostTC(p._id)) }}>
+							<Text>{p.title}</Text>
+						</Button>
+					)}
+				</VStack>
+			</ScrollView></View>
+		);
+	} else if (currentPage === 'read') {
+		return (<View style={styles.container} >
+			<ScrollView _contentContainerStyle={{
+				px: "10px",
+				mb: "0",
+				minW: "72",
+			}} style={{ flex: 1 }}>
+
+				<Center bg="primary.300" >
+
+					<Menu
+						// closeOnSelect={false}
+						w="190"
+						onOpen={() => console.log("opened")}
+						onClose={() => console.log("closed")}
+						trigger={(triggerProps) => {
+							return (
+								<Pressable {...triggerProps}>
+									<HamburgerIcon />
+								</Pressable>
 							)
 						}}
 					>
 						{categories.map(c => <Menu.Item bg="primary.500" key={c._id} onPress={() => { setCurrentPage(c.title); console.log(c.title) }}>{c.title}</Menu.Item>)}
 					</Menu>
-				</Box>
+
+				</Center>
+				<Markdown styles={styles}>{post.text}</Markdown>
+			</ScrollView></View>
+		);
+	} else
+
+		return (
+
+			<View style={styles.container} >
+				<ScrollView
+					_contentContainerStyle={{
+						px: "0px",
+						mb: "4",
+						minW: "72",
+					}}
+					style={{ flex: 1 }}>
+					<VStack space={1}>{categories.map(c => <Button size="sm" key={c._id} onPress={() => { setCurrentPage(c.title); console.log(c.title) }}>{c.title}</Button>)}
+					</VStack>
+				</ScrollView>
 			</View>
 
 		);
@@ -138,8 +128,5 @@ const styles = StyleSheet.create({
 	},
 	paragraph: {
 		fontSize: 14,
-	},
-	view: {
-		borderWidth: 1,
 	},
 });
