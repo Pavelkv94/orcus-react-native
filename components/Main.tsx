@@ -56,8 +56,13 @@ export default function Main() {
 				maxW: "370",
 			}} style={{ flex: 1 }}>
 
-				<MarkdownView >{post.text}</MarkdownView>
-			</ScrollView></View>
+				<MarkdownView styles={{
+					image: {
+						width: '100%'
+					}
+				}
+				} >{post.text}</MarkdownView>
+			</ScrollView></View >
 		);
 	} else
 
